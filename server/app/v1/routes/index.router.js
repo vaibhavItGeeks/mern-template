@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const authenticationRoutes = require('./authenticationRoutes/authentication.router.js')
+const authenticationRoutes = require('./authentication/authentication.router.js')
 const userRoutes = require('./userRoutes/user.router.js')
 
-router.post('/auth',authenticationRoutes)
+router.use('/auth',authenticationRoutes)
 router.post('/user',userRoutes)
 
 
