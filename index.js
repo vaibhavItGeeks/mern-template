@@ -1,16 +1,20 @@
 const express = require('express')
-var cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
-const { connectDb } = require('./server/app/v1.0/config/db.config')
-const Routes = require('./server/app/index.router')
+const { connectDb } = require('./server/app/v1/config/db.config')
+const routes = require('./server/app/index.router')
+const passport = require('passport')
+const { initializePassport } = require('./server/app/v1/config/passport.config')
 const app = express()
 
+
+
+initializePassport(passport)
 //middleware
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use('/', Routes)
-
+app.use('/', routes)
 
 
 //db connection and server running 
