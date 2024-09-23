@@ -4,7 +4,7 @@ const authenticationRoutes = require('./authentication/authentication.router.js'
 const userRoutes = require('./user/user.router.js')
 
 router.use('/auth',authenticationRoutes)
-router.post('/user',userRoutes)
+router.use('/user',userRoutes)
 
 
 module.exports = router

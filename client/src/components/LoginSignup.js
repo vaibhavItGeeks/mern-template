@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { InputPasswordComponent, InputTextComponent } from './utiles/InputComponent';
 import ButtonComponent from './utiles/Button';
+import { useDispatch } from 'react-redux';
+import { userCreate, userLogin } from '../store/Actions/apiActions/apiActions';
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
         .required('Full name is required.')
@@ -36,74 +38,17 @@ const formikLoginSchema = Yup.object().shape({
         .required('New password is required.')
 });
 const LoginSignup = () => {
+    const dispatch = useDispatch()
     //////////////////////////////////////////////////Loaders////////////////////////////////////////////////
     const [signUpLoading, setSignUpLoading] = useState(false);
     const [loginLoading, setLoginLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [ani, setAni] = useState(false);
     const createUser = async (values) => {
-        setSignUpLoading(true);
-        try {
-            const response = await fetch('http://localhost:8000/api/v1/users/register',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }, body: JSON.stringify({
-                        fullName: values.fullName,
-                        email: values.email,
-                        password: values.password,
-                        mobileNumber: values.mobileNumber
-                    }),
-                }
-            )
-            const result = await response.json();
-            if (!response.ok) {
-                toast.error(result.message);
-                setSignUpLoading(false)
-                return;
-            }
-            toast.success(result.message);
-            formikSignup.resetForm();
-            setAni(!ani);
-            setSignUpLoading(false)
-        } catch (error) {
-            toast.error('An unexpected error occurred. Please try again.');
-            console.error('Error:', error.message);
-            setSignUpLoading(false);
-        }
+        dispatch(userCreate(values))
     }
     const loginUser = async (values) => {
-        setLoginLoading(true)
-        try {
-            const response = await fetch('http://localhost:8000/api/v1/users/login',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }, body: JSON.stringify({
-                        email: values.email,
-                        password: values.password,
-                    }),
-                }
-            )
-            const result = await response.json();
-            if (!response.ok) {
-                toast.error(result.message);
-                setLoginLoading(false)
-                return;
-            }
-            localStorage.setItem('userDetailes', JSON.stringify(result?.data?.user));
-            localStorage.setItem('accessToken', JSON.stringify(result?.data?.accessToken));
-            toast.success(result.message);
-            formikLogin.resetForm();
-            setShowPassword(false)
-            setLoginLoading(false)
-        } catch (error) {
-            toast.error('An unexpected error occurred. Please try again.');
-            console.error('Error:', error.message);
-            setLoginLoading(false)
-        }
+        dispatch(userLogin(values))
     }
     const formikSignup = useFormik({
         initialValues: {
