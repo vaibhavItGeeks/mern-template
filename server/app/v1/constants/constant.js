@@ -11,6 +11,9 @@ exports.errorMessage = {
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
     NOT_FOUND: 'Not Found',
     LOGIN: 'Login Successfully',
+    WRONG_PASSWORD:"Wrong Password",
+    
+
 
 }
 
