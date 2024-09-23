@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchUsers } from "../../Actions/apiActions/apiActions";
 
 const userSlice = createSlice({
     name: 'user',
@@ -8,21 +9,20 @@ const userSlice = createSlice({
         error: null
     },
     reducers: {
-        fetchUsersPending: (state) => {
+
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchUsers.pending, (state, action) => {
             state.isLoading = true;
-            console.log("i am fetch users pending method")
-        },
-        fetchUsersFulfilled: (state, action) => {
-            console.log(action.payload)
+        });
+        builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.isLoading = false;
             state.users = action.payload;
-        },
-        fetchUsersRejected: (state, action) => {
-            state.isLoading = false;
-            state.error = action.error
-            console.log(" i am fetch users rejected method")
-        }
+        });
+        builder.addCase(fetchUsers.rejected, (state, action) => {
+            state.error = "Something Went Wrong"
+        })
     }
 })
-export const { fetchUsersPending, fetchUsersFulfilled, fetchUsersRejected } = userSlice.actions
+export const { } = userSlice.actions
 export default userSlice;
