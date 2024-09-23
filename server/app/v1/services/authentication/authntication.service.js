@@ -11,11 +11,9 @@ exports.signUp = async (details) => {
     }
 
     const bodyPassword = details.password
-    const { salt, hash } = generatePassword(bodyPassword)
-
+    const { salt, hash } = await generatePassword(bodyPassword)
     const { password, ...bodyDetails } = details
     const userDetails = { ...bodyDetails, password: hash, salt: salt }
-
     const user = await User.create(userDetails)
 
     return {
