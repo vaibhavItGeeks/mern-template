@@ -4,6 +4,9 @@ exports.successMessage = {
     FETCH: 'Fetch Successfully',
     DELETE: 'Delete Successfully',
     LOGIN: 'Login Successfully',
+    EMAIL_SENT:'Email Sent Successfully',
+    UPDATED:'Updated Successfully',
+    
 
 }
 exports.errorMessage = {
