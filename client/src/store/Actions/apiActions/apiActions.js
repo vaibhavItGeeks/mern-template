@@ -44,3 +44,35 @@ export const userCreate = createAsyncThunk('userCreate', async (values) => {
         toast.error(error.response.data.message)
     }
 })
+export const forgotpassword = createAsyncThunk('forgotpassword', async (values) => {
+    console.log(values)
+    try {
+        const response = await api.post('auth/forget', {
+            email: values,
+        }, {
+            'Content-Type': 'application/json',
+        });
+        if (response.data.status) toast.success(response.data.message)
+        else toast.error(response.data.message)
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error)
+        toast.error(error.response.data.message)
+    }
+})
+export const createNewpassword = createAsyncThunk('createNewpassword', async (values) => {
+    console.log(values)
+    try {
+        const response = await api.put(`auth/reset/${values.id}`, {
+            password: values.password,
+        }, {
+            'Content-Type': 'application/json',
+        });
+        if (response.data.status) toast.success(response.data.message)
+        else toast.error(response.data.message)
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error)
+        toast.error(error.response.data.message)
+    }
+})

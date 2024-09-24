@@ -45,7 +45,9 @@ exports.forget = async (req, res) => {
     try {
 
         const email = req.body.email
+        console.log(email)
         const success = await service.forget(email)
+        console.log(success)
         if (success.status) {
             return sendResponse(res, statusCode.OK, true, successMessage.EMAIL_SENT)
         }

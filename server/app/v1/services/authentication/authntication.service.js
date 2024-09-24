@@ -41,7 +41,7 @@ exports.forget = async (email) => {
   const link = `${process.env.FORGET_LINK}/${isExistUser.id}`
   // const link = `${process.env.FORGET_LINK}/1`
   const info = await transporter.sendMail(forget(email, link));
-
+  console.log(isExistUser)
   if (info.messageId) {
     return {
       status: true
@@ -53,7 +53,9 @@ exports.forget = async (email) => {
 
 exports.reset = async (id, password) => {
   const { salt, hash } = await generatePassword(password)
+  console.log(id,"++++++++++")
   const updatedUser = await User.findOneAndUpdate({ _id: id }, { salt: salt, password: hash })
+  console.log(updatedUser)
   if (updatedUser) {
     return {
       status: true,

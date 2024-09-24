@@ -73,7 +73,7 @@ const LoginSignup = () => {
             <div className='h-[400px] w-[400px] rounded-full absolute bottom-[-100px] left-[-100px] bg-[#808080]'></div>
             <div className='w-0 h-0 border-[#808080] border-l-[250px] border-l-transparent border-r-[250px] border-b-[250px] absolute right-[-20px] top-[-20px] rotate-[-5deg]'></div>
             <div className=' z-[1] w-[80vw] h-[90vh] rounded-[10px] bg-white flex relative overflow-hidden'>
-                {/* //////////////////////////////Sign Up Page///////////////////// */}
+                {/* //////////////////////////////////////Sign Up Page/////////////////////////////// */}
                 <div className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full gap-[20px] absolute ${ani ? 'animate-formSecondReturn' : 'animate-formSecond'}`}>
                     <h1 className='font-logoFont text-[30px] text-black'>Create Account</h1>
                     <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
@@ -90,14 +90,14 @@ const LoginSignup = () => {
                     <p className='w-[60%] font-bodyFont text-white text-[14px] text-center'>To keep connected with us please login with your personal info</p>
                     <ButtonComponent buttonText={'Sign In'} handler={() => { setAni(!ani); setShowPassword(false); formikSignup.resetForm(); }} textColor={'black'} bg={'white'} />
                 </div>
-                {/*///////////////////////////// Sign in Page//////////////////// */}
+                {/*///////////////////////////////////// Sign in Page/////////////////////////////////// */}
                 <div className={`w-[65%] rounded-l-[10px] flex flex-col items-center justify-center h-full left-[-50%] gap-[20px] absolute ${ani ? 'animate-formReturn' : 'animate-form'}`}>
                     <h1 className='font-logoFont text-[30px] text-black'>Sign in</h1>
                     <div className='flex items-center w-full justify-center flex-col gap-[10px]'>
                         <InputTextComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikLogin?.values?.email} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.email} touched={formikLogin?.touched?.email} />
                         <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikLogin?.values?.password} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.password} touched={formikLogin?.touched?.password} />
                     </div>
-                    <a href="/forgotpassword" target="_blank" className='font-bodyFont text-[12px] border-b'>Forgot your Password?</a>
+                    <Link to="/forgotpassword" className='font-bodyFont text-[12px] border-b'>Forgot your Password?</Link>
                     <ButtonComponent buttonText={'Sign In'} handler={formikLogin.handleSubmit} loader={isLoading} bg={'black'} />
                 </div>
                 <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-0 absolute justify-center ${ani ? 'animate-formSecond' : 'animate-formSecondReturn'}`}>

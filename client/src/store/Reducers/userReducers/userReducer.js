@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUsers, userCreate, userLogin } from "../../Actions/apiActions/apiActions";
+import { forgotpassword, userCreate } from "../../Actions/apiActions/apiActions";
 
 const userSlice = createSlice({
     name: 'user',
@@ -12,7 +12,6 @@ const userSlice = createSlice({
     },
     reducers: {
         userState: (state, method) => {
-
         }
     },
     extraReducers: (builder) => {
@@ -24,8 +23,19 @@ const userSlice = createSlice({
         });
         builder.addCase(userCreate.rejected, (state, action) => {
             state.error = "Something Went Wrong"
+            state.isLoading = false;
         })
 
+        builder.addCase(forgotpassword.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(forgotpassword.fulfilled, (state, action) => {
+            state.isLoading = false;
+        });
+        builder.addCase(forgotpassword.rejected, (state, action) => {
+            state.error = "Something Went Wrong"
+            state.isLoading = false;
+        })
     }
 })
 export const { userState } = userSlice.actions
