@@ -38,6 +38,8 @@ exports.forget = async (email) => {
     }
   }
   const transporter = nodemailer.createTransport(emailConfig);
+  const link = `${process.env.FORGET_LINK}/${isExistUser.id}`
+  // const link = `${process.env.FORGET_LINK}/1`
   const info = await transporter.sendMail(forget(email, link));
 
   if (info.messageId) {
