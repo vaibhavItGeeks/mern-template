@@ -1,22 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../../api/api";
+import toast from "react-hot-toast";
 export const fetchUsers = createAsyncThunk('fetchUsers', async () => {
     const response = await api.get('/users');
     return response?.data;
 });
 
 export const userLogin = createAsyncThunk('userLogin', async (values) => {
-    const response = (await api.post('auth/login',
-        {
-            email: values.email,
-            password: values.password
-        },
-        {
-            'Content-Type': 'application/json'
-        }
-    ));
-    console.log(response);
-    return response.data;
+    try {
+        const response = (await api.post('auth/login',
+            {
+                email: values.email,
+                password: values.password
+            },
+            {
+                'Content-Type': 'application/json'
+            }
+        ));
+        if (response.data.status) toast.success(response.data.message)
+        else toast.error(response.data.message)
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error)
+        toast.error(error.response.data.message)
+    }
 })
 export const userCreate = createAsyncThunk('userCreate', async (values) => {
     try {
@@ -29,9 +36,11 @@ export const userCreate = createAsyncThunk('userCreate', async (values) => {
         }, {
             'Content-Type': 'application/json',
         });
-        const result = response.data;
-        return result;
+        if (response.data.status) toast.success(response.data.message)
+        else toast.error(response.data.message)
+        return response.data;
     } catch (error) {
         console.error('Error:', error)
+        toast.error(error.response.data.message)
     }
 })

@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { CiLock, CiMail, CiMobile1, CiUser } from 'react-icons/ci'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import toast from 'react-hot-toast';
 import { InputPasswordComponent, InputTextComponent } from './utiles/InputComponent';
 import ButtonComponent from './utiles/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userCreate, userLogin } from '../store/Actions/apiActions/apiActions';
+import { Link } from 'react-router-dom';
 const formikSchema = Yup.object().shape({
     fullName: Yup.string()
         .required('Full name is required.')
@@ -39,9 +39,8 @@ const formikLoginSchema = Yup.object().shape({
 });
 const LoginSignup = () => {
     const dispatch = useDispatch()
+    const isLoading = useSelector(state => state.someReducer.isLoading)
     //////////////////////////////////////////////////Loaders////////////////////////////////////////////////
-    const [signUpLoading, setSignUpLoading] = useState(false);
-    const [loginLoading, setLoginLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [ani, setAni] = useState(false);
     const createUser = async (values) => {
@@ -84,7 +83,7 @@ const LoginSignup = () => {
                         <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikSignup?.values?.password} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.password} touched={formikSignup?.touched?.password} />
                         <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Confirm Password'} name={'confirmPassword'} value={formikSignup?.values?.confirmPassword} changeHandler={formikSignup.handleChange} errors={formikSignup?.errors?.confirmPassword} touched={formikSignup?.touched?.confirmPassword} />
                     </div>
-                    <ButtonComponent buttonText={'Sign Up'} handler={formikSignup.handleSubmit} loader={signUpLoading} bg={'black'} />
+                    <ButtonComponent buttonText={'Sign Up'} handler={formikSignup.handleSubmit} loader={isLoading} bg={'black'} />
                 </div>
                 <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-[-30%] absolute justify-center ${ani ? 'animate-form' : 'animate-formReturn'}`}>
                     <h1 className='font-logoFont text-[30px] text-white'>Welcome, Back!</h1>
@@ -98,8 +97,8 @@ const LoginSignup = () => {
                         <InputTextComponent icon={<CiMail />} placeholder={'Email'} name={'email'} value={formikLogin?.values?.email} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.email} touched={formikLogin?.touched?.email} />
                         <InputPasswordComponent icon={<CiLock />} showPassword={showPassword} setShowPassword={() => setShowPassword(prev => !prev)} placeholder={'Password'} name={'password'} value={formikLogin?.values?.password} changeHandler={formikLogin.handleChange} errors={formikLogin?.errors?.password} touched={formikLogin?.touched?.password} />
                     </div>
-                    <p className='font-bodyFont text-[12px] border-b'>Forgot your Password?</p>
-                    <ButtonComponent buttonText={'Sign In'} handler={formikLogin.handleSubmit} loader={loginLoading} bg={'black'} />
+                    <a href="/forgotpassword" target="_blank" className='font-bodyFont text-[12px] border-b'>Forgot your Password?</a>
+                    <ButtonComponent buttonText={'Sign In'} handler={formikLogin.handleSubmit} loader={isLoading} bg={'black'} />
                 </div>
                 <div className={`z-[1] w-[35%] rounded-r-[10px] flex flex-col gap-[20px] items-center h-full right-0 absolute justify-center ${ani ? 'animate-formSecond' : 'animate-formSecondReturn'}`}>
                     <h1 className='font-logoFont text-[30px] text-white'>Hellow, Friend!</h1>
