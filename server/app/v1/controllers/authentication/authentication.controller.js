@@ -68,9 +68,9 @@ exports.forget = async (req, res) => {
 exports.reset = async (req, res) => {
     try {
 
-        const email = req.params.id
+        const id = req.params.id
         const password = req.body.password
-        const updatedUser = await service.reset(email, password)
+        const updatedUser = await service.reset(id, password)
         if(updatedUser){
             return sendResponse(res,statusCode.OK,true,successMessage.UPDATED,updatedUser)
         }

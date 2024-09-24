@@ -51,13 +51,13 @@ exports.forget = async (email) => {
 }
 
 
-exports.reset = async(email,password)=>{
- const { salt, hash } = await generatePassword(password)
- const updatedUser = await User.findOneAndUpdate({email:email},{salt:salt,password:hash})
- if(updatedPassword){
-  return{
-    status:true,
-    result:updatedUser
+exports.reset = async (id, password) => {
+  const { salt, hash } = await generatePassword(password)
+  const updatedUser = await User.findOneAndUpdate({ _id: id }, { salt: salt, password: hash })
+  if (updatedUser) {
+    return {
+      status: true,
+      result: updatedUser
+    }
   }
- }
 }
